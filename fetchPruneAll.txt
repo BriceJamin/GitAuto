@@ -1,0 +1,7 @@
+Fetching origin
+From /home/smallfitz/Documents/GitTests/Workflow/Clef
+ * [new branch]      branche3   -> origin/branche3
+   091a6a9..9f7d0e6  master     -> origin/master
+ * [new branch]      newbranche2 -> origin/newbranche2
+ x [deleted]         (none)     -> origin/branche1
+ x [deleted]         (none)     -> origin/branche2
