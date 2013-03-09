@@ -141,9 +141,12 @@ git push -u --all --prune origin # -u : Suivre la branche distante
 			         # --prune : supprime sur le depoôt distant les branches qui n'existent pas en local
 # J'arrive à la maison
 cd $depotMaison
-
+exit
 # Je veux récupérer mon travail
- # git fetch origin      # Télécharge toutes les infos du dépôt distant
+
+# METHODE 1, manuelle
+
+# git fetch origin      # Télécharge toutes les infos du dépôt distant
 git fetch --prune origin # Idem, en supprimant les infos des branches distantes qui n'existent plus
                          # Affiche également des informations sur :
 			 # - les nouvelles branches distantes téléchargées
@@ -172,3 +175,6 @@ git branch newbranche2 --track origin/newbranche2
  # git branch -d branche1 # Supprime la branche 1. Impossible si elle n'est pas mergée.
 git branch -D branche1 # Dans ce cas, utiliser -D pour forcer la suppression
 git branch -D branche2
+
+# METHODE 2, automatique
+# Voir le script git-recup-all-from.bash
