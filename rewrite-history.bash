@@ -1,7 +1,7 @@
 #!/bin/bash
 
-name="BriceJamin"
-email="brice.jamin@hotmail.fr"
+export NAME="BriceJamin"
+export EMAIL="brice.jamin@hotmail.fr"
 oldestCommit=""
 newestCommit=""
 
@@ -39,8 +39,8 @@ fi
 
 echo
 echo "Chaque commit rencontré sera modifié si nécessaire afin que :"
-echo " - Les noms de l'auteur et du commiteur soient : $name"
-echo " - Les emails de l'auteur et du commiteur soient : $email"
+echo " - Les noms de l'auteur et du commiteur soient : $NAME"
+echo " - Les emails de l'auteur et du commiteur soient : $EMAIL"
 echo " - La date de modif du commiteur soit la même que celle de l'auteur."
 echo
 echo "Il est recommendé d'effectuer au préalable la réécriture sur une branche de test..."
@@ -57,31 +57,23 @@ fi
 
 git filter-branch -f --commit-filter '
 
-modify="false";
+author_name="$GIT_AUTHOR_NAME"
+author_email="$GIT_AUTHOR_EMAIL"
+author_date="$GIT_AUTHOR_DATE"
 
-if [ "$GIT_AUTHOR_NAME" != "$name" ];
-then
-	GIT_AUTHOR_NAME="$name";
-	GIT_AUTHOR_EMAIL="$email";
-	modify="true";
+if [ "$GIT_AUTHOR_NAME" != "$NAME" ]; then
+	author_name="$NAME";
 fi
 
-if [ "$GIT_COMMITTER_NAME" != "$name" ];
-then
-	GIT_COMMITTER_NAME = "$name";
-	GIT_COMMITTER_EMAIL = "$email";
-	modify="true";
+if [ "$GIT_AUTHOR_EMAIL" != "$EMAIL" ]; then
+	author_email="$EMAIL";
 fi
 
-if [ "$GIT_AUTHOR_DATE" != "$GIT_COMMITER_DATE" ];
-then
-	GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE";
-	modify="true";
-fi
+export GIT_AUTHOR_NAME="$author_name"
+export GIT_AUTHOR_EMAIL="$author_email"
 
-if [ $modify = "true" ];
-then
-	git commit-tree "$@";
-fi
+export GIT_COMMITTER_NAME="$author_name"
+export GIT_COMMITTER_EMAIL="$author_email"
+export GIT_COMMITTER_DATE="$author_date"
 
 ' $oldestCommit..$newestCommit
