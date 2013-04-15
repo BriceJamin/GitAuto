@@ -1,0 +1,11 @@
+[user]
+	email = brice.jamin@hotmail.fr
+	name = BriceJamin
+[core]
+	autocrlf = input
+[format]
+	pretty = oneline
+[log]
+	abbrevCommit = true
+[color]
+	ui = true
