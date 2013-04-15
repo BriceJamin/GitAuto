@@ -55,7 +55,7 @@ else
 	echo "Réécriture de l'historique..."
 fi
 
-git filter-branch -f --commit-filter '
+git filter-branch -f --env-filter '
 
 author_name="$GIT_AUTHOR_NAME"
 author_email="$GIT_AUTHOR_EMAIL"
