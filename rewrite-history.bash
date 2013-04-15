@@ -2,15 +2,41 @@
 
 name="BriceJamin"
 email="brice.jamin@hotmail.fr"
-oldestCommit="32a8eb5"
-newestCommit="HEAD"
+oldestCommit=""
+newestCommit=""
+
+if [ "$oldestCommit" = "" ];
+then
+	oldestCommit=`git log | tail -n 1 | cut -d\  -f 1`
+fi
+
+if [ "$newestCommit" = "" ];
+then
+	newestCommit="HEAD"
+fi
 
 echo "Une réécriture de l'historique va être effectuée."
 echo "Elle commencera après le commit suivant :"
-git log -1 --pretty=fuller $oldestCommit
+git log -1 --pretty=fuller $oldestCommit 2> /dev/null
+
+if [ ! $? -eq 0 ];
+then
+	echo "Commit inconnu."
+	echo "Abandon."
+	exit
+fi
+
 echo
 echo "Et s'arrêtera après avoir traité le commit suivant :"
 git log -1 --pretty=fuller $newestCommit
+
+if [ ! $? -eq 0 ];
+then
+	echo "Commit inconnu."
+	echo "Abandon."
+	exit
+fi
+
 echo
 echo "Chaque commit rencontré sera modifié si nécessaire afin que :"
 echo " - Les noms de l'auteur et du commiteur soient : $name"
@@ -23,13 +49,11 @@ read answer
 
 if [ $answer != "O" ];
 then
-	echo "Annulation."
+	echo "Abandon."
 	exit
 else
-	echo "Début de la réécriture de l'historique..."
+	echo "Réécriture de l'historique..."
 fi
-
-exit
 
 git filter-branch -f --commit-filter '
 
